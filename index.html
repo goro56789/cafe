@@ -227,6 +227,30 @@
         </div>
       </section>
 
+      <!-- 05: Values -->
+      <section class="tpl-step" data-step="5">
+        <div class="stack gap-24">
+          <h2 class="h1">価値観</h2>
+          <div class="card stack gap-16">
+            <label class="label">CO₂配慮度</label>
+            <input type="range" min="0" max="2" value="1" aria-label="CO2配慮度" id="co2-slider" />
+            <div class="checks">
+              <label><input type="checkbox" id="fairtrade" />フェアトレード</label>
+              <label><input type="checkbox" id="organic" />オーガニック</label>
+              <label><input type="checkbox" id="additive-free" />無添加</label>
+            </div>
+          </div>
+          <div class="card stack gap-16">
+            <div class="chips" role="group" aria-label="価格帯">
+              <button class="chip" data-price="low">ワンコイン</button>
+              <button class="chip is-selected" data-price="std">スタンダード</button>
+              <button class="chip" data-price="premium">プレミアム</button>
+            </div>
+            <label class="switch"><input type="checkbox" id="fast-serving" />提供スピード優先</label>
+          </div>
+        </div>
+      </section>
+
       <!-- 06: Summary -->
       <section class="tpl-step" data-step="6">
         <div class="stack gap-24">
