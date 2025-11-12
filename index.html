@@ -84,56 +84,35 @@
         </div>
       </section>
 
-      <!-- 02: Taste Profile（整え済み） -->
-      <section class="tpl-step" data-step="2">
-        <div class="stack gap-24">
-          <h2 class="h1">味の好み</h2>
+     <!-- 02: Taste Profile → 修正後「好きな食べ物入力」 -->
+<section class="tpl-step" data-step="2">
+  <div class="stack gap-24">
+    <h2 class="h1">好きな食べ物を5つ教えてください</h2>
 
-          <div class="taste-layout">
-            <!-- 左：カテゴリ -->
-            <div class="card taste-col">
-              <h3 class="h2">味カテゴリ</h3>
-              <p class="caption">調整したい味をえらんでください。</p>
-              <div class="chips taste-group" role="group" aria-label="味カテゴリ">
-                <button class="chip is-selected" data-flavor="sweet">甘</button>
-                <button class="chip" data-flavor="sour">酸</button>
-                <button class="chip" data-flavor="bitter">苦</button>
-                <button class="chip" data-flavor="umami">旨</button>
-                <button class="chip" data-flavor="salty">塩</button>
-                <button class="chip" data-flavor="spice">スパイス 🌶️</button>
-              </div>
-            </div>
+    <div class="input-methods grid-2">
+      <!-- 音声入力 -->
+      <div class="card stack gap-16">
+        <h3 class="h2">音声入力</h3>
+        <p class="caption">マイクを押して話してください</p>
+        <button class="btn btn-primary" id="voice-btn">🎤 音声入力</button>
+        <div id="voice-result" class="result-box">まだ入力されていません</div>
+        <div id="voice-result" class="result-box">まだ入力されていません</div>
+        <div id="voice-result" class="result-box">まだ入力されていません</div>
+        <div id="voice-result" class="result-box">まだ入力されていません</div>
+        <div id="voice-result" class="result-box">まだ入力されていません</div>
+      </div>
 
-            <!-- 右：調整＋プレビュー -->
-            <div class="taste-col stack gap-16">
-              <div class="card slider-card">
-                <div class="slider-head">
-                  <label class="label" id="flavor-label">甘の強さ</label>
-                  <span class="slider-value" id="flavor-value">60%</span>
-                </div>
-                <input type="range" min="0" max="100" value="60" aria-label="味の強さ" id="flavor-slider" />
-                <p class="caption">強さを 0–100% で調整</p>
-              </div>
+      <!-- ペン入力 -->
+      <div class="card stack gap-16">
+        <h3 class="h2">ペン入力</h3>
+        <p class="caption">好きな食べ物を手書きしてください</p>
+        <canvas id="pen-canvas" width="300" height="200"></canvas>
+        <button class="btn btn-secondary" id="clear-canvas">クリア</button>
+      </div>
+    </div>
+  </div>
+</section>
 
-              <div class="card mix-card">
-                <div class="mix-header">
-                  <h3 class="h2">いまの味バランス</h3>
-                  <span class="caption" id="taste-label">甘 60%</span>
-                </div>
-                <div class="mix-bar"><span id="taste-bar" style="width: 60%"></span></div>
-                <div class="mix-mini">
-                  <div class="mini-row"><span>甘</span><strong id="mini-sweet">60%</strong></div>
-                  <div class="mini-row"><span>酸</span><strong id="mini-sour">0%</strong></div>
-                  <div class="mini-row"><span>苦</span><strong id="mini-bitter">0%</strong></div>
-                  <div class="mini-row"><span>旨</span><strong id="mini-umami">0%</strong></div>
-                  <div class="mini-row"><span>塩</span><strong id="mini-salty">0%</strong></div>
-                  <div class="mini-row"><span>スパイス</span><strong id="mini-spice">0%</strong></div>
-                </div>
-              </div>
-            </div>
-          </div><!-- /taste-layout -->
-        </div>
-      </section>
 
       <!-- 03: Restrictions -->
       <section class="tpl-step" data-step="3">

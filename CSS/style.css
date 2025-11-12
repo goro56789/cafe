@@ -152,6 +152,32 @@ input[type="range"]{ width:100%; accent-color:var(--brand-amber) }
   padding:10px 12px; border:1px solid var(--line-soft); border-radius:10px; background:#fff;
 }
 
+/* 新しい入力方式 */
+.input-methods {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s24);
+}
+@media (max-width:900px){
+  .input-methods { grid-template-columns:1fr; }
+}
+
+.result-box {
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-m);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+}
+
+#pen-canvas {
+  border: 1px solid var(--line-hard);
+  border-radius: var(--r-m);
+  background: #fff;
+  cursor: crosshair;
+}
+
 /* おすすめ：可視化領域 */
 .reco-grid{ display:grid; grid-template-columns:1fr; gap:var(--s24) }
 .visual{

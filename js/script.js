@@ -134,53 +134,52 @@
   });
 
   /* ---------------- Step 2: Taste ---------------- */
-  const flavorButtons = document.querySelectorAll('.taste-group .chip');
-  const flavorLabel = document.getElementById('flavor-label');
-  const flavorValue = document.getElementById('flavor-value');
-  const flavorSlider = document.getElementById('flavor-slider');
-  const tasteLabel = document.getElementById('taste-label');
-  const tasteBar = document.getElementById('taste-bar');
-  const mini = {
-    sweet: document.getElementById('mini-sweet'),
-    sour: document.getElementById('mini-sour'),
-    bitter: document.getElementById('mini-bitter'),
-    umami: document.getElementById('mini-umami'),
-    salty: document.getElementById('mini-salty'),
-    spice: document.getElementById('mini-spice')
-  };
-  const flavorJP = { sweet:'甘', sour:'酸', bitter:'苦', umami:'旨', salty:'塩', spice:'スパイス' };
-  let activeFlavor = 'sweet';
+// 音声入力（Web Speech API）
+const voiceBtn = document.getElementById("voice-btn");
+const voiceResult = document.getElementById("voice-result");
 
-  const updateFlavorUI = () => {
-    const name = flavorJP[activeFlavor] || '味';
-    const val = Number(flavorSlider?.value || 0);
-    if (flavorLabel) flavorLabel.textContent = `${name}の強さ`;
-    if (flavorValue) flavorValue.textContent = `${val}%`;
-    if (tasteLabel) tasteLabel.textContent = `${name} ${val}%`;
-    if (tasteBar) tasteBar.style.width = `${val}%`;
-    Object.entries(state.taste).forEach(([k,v])=>{
-      if (mini[k]) mini[k].textContent = `${v}%`;
-    });
-  };
-
-  flavorButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      flavorButtons.forEach(b => b.classList.remove('is-selected'));
-      btn.classList.add('is-selected');
-      activeFlavor = btn.dataset.flavor;
-      if (flavorSlider) flavorSlider.value = state.taste[activeFlavor] ?? 0;
-      updateFlavorUI();
-    });
+if (voiceBtn) {
+  voiceBtn.addEventListener("click", () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      voiceResult.textContent = "音声認識はこのブラウザでサポートされていません";
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = "ja-JP";
+    recognition.start();
+    recognition.onresult = (event) => {
+      const text = event.results[0][0].transcript;
+      voiceResult.textContent = text;
+      answers.favorites = text; // 保存
+    };
   });
+}
 
-  if (flavorSlider) {
-    flavorSlider.addEventListener('input', (e) => {
-      const val = Number(e.target.value);
-      state.taste[activeFlavor] = val;
-      updateFlavorUI();
-    });
-    updateFlavorUI();
-  }
+// ペン入力（Canvas）
+const canvas = document.getElementById("pen-canvas");
+const ctx = canvas.getContext("2d");
+let drawing = false;
+
+canvas.addEventListener("mousedown", () => { drawing = true; });
+canvas.addEventListener("mouseup", () => { drawing = false; ctx.beginPath(); });
+canvas.addEventListener("mousemove", draw);
+
+function draw(e) {
+  if (!drawing) return;
+  ctx.lineWidth = 2;
+  ctx.lineCap = "round";
+  ctx.strokeStyle = "#000";
+  ctx.lineTo(e.offsetX, e.offsetY);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(e.offsetX, e.offsetY);
+}
+
+document.getElementById("clear-canvas").addEventListener("click", () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
 
   /* ---------------- Step 3: Restrictions ---------------- */
   const allergyGroup = document.querySelector('.allergy-group');
@@ -632,6 +631,26 @@
 
     callBtn.addEventListener('click', notifyStaff);
   })();
+
+  // answers に不耐症と体調を追加
+answers.intolerance = [];
+answers.pregnantCond = false;
+answers.noCaffeine = false;
+
+// 保存処理に追加
+function saveStepAnswers(step) {
+  switch(step) {
+    case "3": // 食の制約
+      answers.intolerance = Array.from(document.querySelectorAll('[data-step="3"] input[data-intolerance]:checked'))
+                                .map(cb => cb.parentElement.textContent.trim());
+      break;
+    case "4": // 体調・気分
+      answers.pregnantCond = document.getElementById("pregnant-cond").checked;
+      answers.noCaffeine = document.getElementById("no-caffeine").checked;
+      break;
+  }
+}
+
 
   /* ---------------- Timeout & Others ---------------- */
   document.querySelectorAll('[data-step="9"] .btn.btn-primary')
