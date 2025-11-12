@@ -186,6 +186,16 @@
               </div>
             </div>
           </div>
+          <div class="card toggle-card">
+      <div class="toggle-head">
+        <h3 class="h2">食物不耐症</h3>
+        <span class="caption">乳糖・グルテンなど</span>
+      </div>
+      <div class="toggle-list">
+        <label class="switch"><input type="checkbox" data-intolerance="lactose" />乳糖不耐症</label>
+        <label class="switch"><input type="checkbox" data-intolerance="gluten" />グルテン不耐症</label>
+      </div>
+    </div>
 
           <div class="banner-safe">
             <strong>完全対応モードON：</strong>選ばない食材は以後の候補から自動で非表示にします。
@@ -206,6 +216,8 @@
               <label class="label">いまの気分（さっぱり↔こってり）</label>
               <input type="range" min="0" max="100" value="35" aria-label="気分スライダー" id="mood-slider" />
               <div class="toggles">
+                <label class="switch"><input type="checkbox" id="pregnant-cond" />妊娠中</label>
+                <label class="switch"><input type="checkbox" id="no-caffeine" />ノンカフェイン</label>
                 <label class="switch"><input type="checkbox" id="low-caffeine" />低カフェイン</label>
                 <label class="switch"><input type="checkbox" id="low-sugar" />低糖</label>
                 <label class="switch"><input type="checkbox" id="low-fat" />低脂</label>
