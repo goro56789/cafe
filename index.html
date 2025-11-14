@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
     <meta name="robots" content="noindex" />
-    <title>Quantum Café – Kiosk Wireframe</title>
+    <title>Taste Carte ― あなた専用メニューを描く一枚のカルテ ―</title>
     <meta name="description" content="サイトの概要を記入します。" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,100 +19,121 @@
   </head>
 <body>
   <div class="app">
+
     <!-- Header -->
     <header class="org-header" role="banner">
-      <h1 class="h1">Quantum Café</h1>
+      <h1 class="brand-title" aria-label="Taste Carte あなた専用メニューを描く一枚のカルテ">
+        <span class="brand-main">Taste Carte</span>
+        <span class="brand-sub">― あなた専用メニューを描く一枚のカルテ</span>
+      </h1>
+
       <div class="header-actions" role="group" aria-label="ヘッダー操作">
-        <button class="btn btn-ghost" aria-label="ヘルプ">?</button>
-        <!-- これを押すと Step0（言語選択）へ遷移 -->
-        <button class="btn btn-ghost" id="lang-indicator" aria-label="現在の言語">JP</button>
-        <button class="fab-accessibility" aria-label="アクセシビリティ設定">A+</button>
+        <!-- Language -->
+        <div class="lang-wrap">
+          <button id="lang-toggle" class="btn btn-ghost" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="lang-menu">
+            <span id="lang-indicator">JP</span> ▾
+          </button>
+          <div id="lang-menu" class="lang-menu" role="menu" hidden>
+            <button role="menuitem" data-lang="ja" tabindex="-1" type="button">日本語（JP）</button>
+            <button role="menuitem" data-lang="en" tabindex="-1" type="button">English（EN）</button>
+            <button role="menuitem" data-lang="zh" tabindex="-1" type="button">简体中文（ZH）</button>
+            <button role="menuitem" data-lang="ko" tabindex="-1" type="button">한국어（KO）</button>
+          </div>
+        </div>
+
+        <button class="fab-accessibility" type="button" aria-label="アクセシビリティ設定">A+</button>
       </div>
     </header>
 
     <!-- Progress (top) -->
     <nav class="progress" aria-label="ステップ進捗">
       <ol>
-        <li class="is-done"></li>
         <li class="is-active"></li>
         <li></li><li></li><li></li><li></li>
       </ol>
     </nav>
 
-    <!-- Content -->
+    <!-- Main -->
     <main class="content" role="main">
 
-      <!-- 00: Splash / Language -->
-      <section class="tpl-step" data-step="0">
-        <div class="card">
-          <h2 class="h1">言語を選択してください</h2>
-          <div class="segmented" role="tablist" aria-label="言語選択" id="lang-tabs">
-            <button role="tab" aria-selected="true" data-lang="ja">日本語</button>
-            <button role="tab" aria-selected="false" data-lang="en">English</button>
-            <button role="tab" aria-selected="false" data-lang="zh">简体中文</button>
-            <button role="tab" aria-selected="false" data-lang="ko">한국어</button>
-          </div>
-          <div class="actions-row">
-            <button class="btn btn-secondary" data-jump="1">戻る</button>
-            <button class="btn btn-primary" data-jump="1">はじめる</button>
-          </div>
-          <p class="caption">データの扱いについては <a href="#" class="link">こちら</a></p>
-        </div>
-      </section>
-
-      <!-- 01: Welcome Mode (初期表示) -->
+      <!-- 01: Start -->
       <section class="tpl-step" data-step="1" data-active>
-        <div class="stack gap-24">
-          <div class="row-between">
-            <h2 class="h1">はじめ方をえらぶ</h2>
-            <!-- 画面内の“言語を変更”ボタン（押すと Step0 へ） -->
-            <button class="btn btn-ghost btn-lang-switch" data-jump="0" aria-label="言語を変更">言語を変更</button>
-          </div>
-
-          <div class="grid-2">
-            <article class="card selectable" data-mode="simple" role="button" tabindex="0" aria-label="かんたんモード">
-              <h3 class="h2">かんたん</h3>
-              <p class="body">所要 45秒（体調・価値観はスキップ）</p>
-            </article>
-            <article class="card selectable" data-mode="detailed" role="button" tabindex="0" aria-label="くわしくモード">
-              <h3 class="h2">くわしく</h3>
-              <p class="body">所要 90秒（全ステップ）</p>
-            </article>
-          </div>
-
-          <p class="caption">データは匿名IDで一時保存され、会期終了後に削除されます。<a class="link" href="#">詳しく</a></p>
+        <div class="stack gap-24 center">
+          <h2 class="welcome-title">ようこそ、Quantm Caféへ</h2>
+          <p class="lead">あなたの好みと食の制約に合わせて、最適なパスタとサラダ、ドリンクをご提案します。</p>
+          <button id="start-btn" class="btn btn-primary btn-lg" type="button">スタート</button>
+          <p class="caption">このあとは、順番に質問にお答えください。</p>
         </div>
       </section>
 
-     <!-- 02: Taste Profile → 修正後「好きな食べ物入力」 -->
-<section class="tpl-step" data-step="2">
-  <div class="stack gap-24">
-    <h2 class="h1">好きな食べ物を5つ教えてください</h2>
+      <!-- 02: Favorites (Voice/Pen) -->
+      <section class="tpl-step" data-step="2">
+        <div class="stack gap-24">
+          <h2 class="h1">好きな食べ物を5つ教えてください</h2>
 
-    <div class="input-methods grid-2">
-      <!-- 音声入力 -->
-      <div class="card stack gap-16">
-        <h3 class="h2">音声入力</h3>
-        <p class="caption">マイクを押して話してください</p>
-        <button class="btn btn-primary" id="voice-btn">🎤 音声入力</button>
-        <div id="voice-result" class="result-box">まだ入力されていません</div>
-        <div id="voice-result" class="result-box">まだ入力されていません</div>
-        <div id="voice-result" class="result-box">まだ入力されていません</div>
-        <div id="voice-result" class="result-box">まだ入力されていません</div>
-        <div id="voice-result" class="result-box">まだ入力されていません</div>
-      </div>
+          <div class="vstack">
+            <!-- 音声入力（上） -->
+            <div class="card stack gap-16">
+              <h3 class="h2">音声入力</h3>
+              <p class="caption">マイクを押して話し、「完了」で次の入力欄に進みます。</p>
 
-      <!-- ペン入力 -->
-      <div class="card stack gap-16">
-        <h3 class="h2">ペン入力</h3>
-        <p class="caption">好きな食べ物を手書きしてください</p>
-        <canvas id="pen-canvas" width="300" height="200"></canvas>
-        <button class="btn btn-secondary" id="clear-canvas">クリア</button>
-      </div>
-    </div>
-  </div>
-</section>
+              <div class="voice-row">
+                <div class="voice-slot">
+                  <div class="voice-controls">
+                    <button class="btn btn-secondary mic-btn" data-idx="0" type="button">🎤 マイク</button>
+                    <button class="btn btn-primary done-btn" data-idx="0" type="button" disabled>完了</button>
+                  </div>
+                  <div class="result-box" id="voice-result-0" aria-live="polite">未入力</div>
+                </div>
+                <div class="voice-slot">
+                  <div class="voice-controls">
+                    <button class="btn btn-secondary mic-btn" data-idx="1" type="button" disabled>🎤 マイク</button>
+                    <button class="btn btn-primary done-btn" data-idx="1" type="button" disabled>完了</button>
+                  </div>
+                  <div class="result-box" id="voice-result-1" aria-live="polite">未入力</div>
+                </div>
+              </div>
 
+              <div class="voice-row">
+                <div class="voice-slot">
+                  <div class="voice-controls">
+                    <button class="btn btn-secondary mic-btn" data-idx="2" type="button" disabled>🎤 マイク</button>
+                    <button class="btn btn-primary done-btn" data-idx="2" type="button" disabled>完了</button>
+                  </div>
+                  <div class="result-box" id="voice-result-2" aria-live="polite">未入力</div>
+                </div>
+                <div class="voice-slot">
+                  <div class="voice-controls">
+                    <button class="btn btn-secondary mic-btn" data-idx="3" type="button" disabled>🎤 マイク</button>
+                    <button class="btn btn-primary done-btn" data-idx="3" type="button" disabled>完了</button>
+                  </div>
+                  <div class="result-box" id="voice-result-3" aria-live="polite">未入力</div>
+                </div>
+              </div>
+
+              <div class="voice-row">
+                <div class="voice-slot">
+                  <div class="voice-controls">
+                    <button class="btn btn-secondary mic-btn" data-idx="4" type="button" disabled>🎤 マイク</button>
+                    <button class="btn btn-primary done-btn" data-idx="4" type="button" disabled>完了</button>
+                  </div>
+                  <div class="result-box" id="voice-result-4" aria-live="polite">未入力</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ペン入力（下） -->
+            <div class="card stack gap-16">
+              <h3 class="h2">ペン入力</h3>
+              <p class="caption">好きな食べ物を手書きしてください（任意）。</p>
+              <canvas id="pen-canvas" width="600" height="250" aria-label="手書きキャンバス"></canvas>
+              <div class="actions-row">
+                <button id="clear-canvas" class="btn btn-secondary" type="button">クリア</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- 03: Restrictions -->
       <section class="tpl-step" data-step="3">
@@ -121,27 +142,18 @@
 
           <div class="card stack gap-16">
             <h3 class="h2">アレルギー</h3>
-            <div class="search">
-              <input type="search" placeholder="食材を検索（例：乳、小麦…）" aria-label="アレルギー検索" />
+            <div class="search search-lg">
+              <input type="search" id="allergy-search" placeholder="食材を検索（例：乳、小麦、えび…）" aria-label="アレルギー検索" />
             </div>
-            <div class="chips wrap allergy-group" role="group" aria-label="主要アレルゲン">
-              <button class="chip" data-allergen="卵">卵</button>
-              <button class="chip" data-allergen="乳">乳</button>
-              <button class="chip" data-allergen="小麦">小麦</button>
-              <button class="chip" data-allergen="そば">そば</button>
-              <button class="chip" data-allergen="落花生">落花生</button>
-              <button class="chip" data-allergen="えび">えび</button>
-              <button class="chip" data-allergen="かに">かに</button>
-              <button class="chip" data-allergen="くるみ">くるみ</button>
-            </div>
-            <div class="selected-pills" aria-live="polite" id="allergen-pills"></div>
+            <div id="allergy-chips" class="chips wrap allergy-group" role="group" aria-label="主要アレルゲン"></div>
+            <div id="allergen-pills" class="selected-pills" aria-live="polite"></div>
           </div>
 
           <div class="grid-2">
             <div class="card toggle-card">
               <div class="toggle-head">
                 <h3 class="h2">宗教的禁忌</h3>
-                <span class="caption">ハラール / コーシャ / 豚NG / 酒NG</span>
+                <span class="caption">Halal / Kosher / 豚NG / 酒NG</span>
               </div>
               <div class="toggle-list">
                 <label class="switch"><input type="checkbox" data-religion="halal" />ハラール</label>
@@ -165,19 +177,16 @@
               </div>
             </div>
           </div>
-          <div class="card toggle-card">
-      <div class="toggle-head">
-        <h3 class="h2">食物不耐症</h3>
-        <span class="caption">乳糖・グルテンなど</span>
-      </div>
-      <div class="toggle-list">
-        <label class="switch"><input type="checkbox" data-intolerance="lactose" />乳糖不耐症</label>
-        <label class="switch"><input type="checkbox" data-intolerance="gluten" />グルテン不耐症</label>
-      </div>
-    </div>
 
-          <div class="banner-safe">
-            <strong>完全対応モードON：</strong>選ばない食材は以後の候補から自動で非表示にします。
+          <div class="card toggle-card">
+            <div class="toggle-head">
+              <h3 class="h2">食物不耐症</h3>
+              <span class="caption">乳糖・グルテンなど</span>
+            </div>
+            <div class="toggle-list">
+              <label class="switch"><input type="checkbox" data-intolerance="lactose" />乳糖不耐症</label>
+              <label class="switch"><input type="checkbox" data-intolerance="gluten" />グルテン不耐症</label>
+            </div>
           </div>
         </div>
       </section>
@@ -186,14 +195,14 @@
       <section class="tpl-step" data-step="4">
         <div class="stack gap-24">
           <h2 class="h1">体調・気分</h2>
-        <div class="grid-2">
+          <div class="grid-2">
             <div class="card stack gap-16">
-              <button class="btn btn-primary">自動測定を試す</button>
-              <p class="caption">※任意。カメラPPG/ウォッチ連携</p>
+              <button class="btn btn-primary" type="button" disabled>自動測定を試す</button>
+              <p class="caption">※ 任意。将来、カメラPPG/ウォッチ連携に対応予定です。</p>
             </div>
             <div class="card stack gap-16">
-              <label class="label">いまの気分（さっぱり↔こってり）</label>
-              <input type="range" min="0" max="100" value="35" aria-label="気分スライダー" id="mood-slider" />
+              <label for="mood-slider" class="label">いまの気分（さっぱり ↔ こってり）</label>
+              <input id="mood-slider" type="range" min="0" max="100" value="35" />
               <div class="toggles">
                 <label class="switch"><input type="checkbox" id="pregnant-cond" />妊娠中</label>
                 <label class="switch"><input type="checkbox" id="no-caffeine" />ノンカフェイン</label>
@@ -206,146 +215,213 @@
         </div>
       </section>
 
-      <!-- 05: Values -->
-      <section class="tpl-step" data-step="5">
-        <div class="stack gap-24">
-          <h2 class="h1">価値観</h2>
-          <div class="card stack gap-16">
-            <label class="label">CO₂配慮度</label>
-            <input type="range" min="0" max="2" value="1" aria-label="CO2配慮度" id="co2-slider" />
-            <div class="checks">
-              <label><input type="checkbox" id="fairtrade" />フェアトレード</label>
-              <label><input type="checkbox" id="organic" />オーガニック</label>
-              <label><input type="checkbox" id="additive-free" />無添加</label>
-            </div>
-          </div>
-          <div class="card stack gap-16">
-            <div class="chips" role="group" aria-label="価格帯">
-              <button class="chip" data-price="low">ワンコイン</button>
-              <button class="chip is-selected" data-price="std">スタンダード</button>
-              <button class="chip" data-price="premium">プレミアム</button>
-            </div>
-            <label class="switch"><input type="checkbox" id="fast-serving" />提供スピード優先</label>
-          </div>
-        </div>
-      </section>
-
       <!-- 06: Summary -->
       <section class="tpl-step" data-step="6">
         <div class="stack gap-24">
           <h2 class="h1">サマリー & 同意</h2>
           <ul class="summary">
             <li class="summary-row">
-              <span class="summary-key">味</span>
-              <span class="summary-val" id="summary-taste">—</span>
-              <button class="btn btn-edit" data-jump="2" aria-label="味を編集">編集</button>
+              <span class="summary-key">好み</span>
+              <span id="summary-taste" class="summary-val">—</span>
+              <button class="btn btn-edit" data-jump="2" type="button" aria-label="好みを編集">編集</button>
             </li>
             <li class="summary-row">
               <span class="summary-key">制約</span>
-              <span class="summary-val" id="summary-restrictions">—</span>
-              <button class="btn btn-edit" data-jump="3" aria-label="制約を編集">編集</button>
+              <span id="summary-restrictions" class="summary-val">—</span>
+              <button class="btn btn-edit" data-jump="3" type="button" aria-label="制約を編集">編集</button>
             </li>
             <li class="summary-row">
               <span class="summary-key">体調</span>
-              <span class="summary-val" id="summary-condition">—</span>
-              <button class="btn btn-edit" data-jump="4" aria-label="体調を編集">編集</button>
-            </li>
-            <li class="summary-row">
-              <span class="summary-key">価値観</span>
-              <span class="summary-val" id="summary-values">—</span>
-              <button class="btn btn-edit" data-jump="5" aria-label="価値観を編集">編集</button>
+              <span id="summary-condition" class="summary-val">—</span>
+              <button class="btn btn-edit" data-jump="4" type="button" aria-label="体調を編集">編集</button>
             </li>
           </ul>
-          <label class="consent"><input type="checkbox" id="consent-check" />匿名IDで一時保存・会期終了後に削除に同意します</label>
+
+          <label class="consent">
+            <input type="checkbox" id="consent-check" />
+            匿名IDで一時保存・会期終了後に削除に同意します
+          </label>
           <p class="caption">「なぜこの質問？」 <span class="link">安全でおいしい提案のため</span></p>
         </div>
       </section>
 
-      <!-- 07: Results + Quantum Dice -->
+      <!-- 07: おすすめ（パスタ） -->
       <section class="tpl-step" data-step="7">
         <div class="stack gap-24">
-          <h2 class="h1">あなたへのおすすめ</h2>
-
+          <h2 class="h1">あなたへのおすすめパスタ</h2>
           <div class="reco-grid">
             <article class="reco card">
               <div class="badges"></div>
               <h3 class="h2">最適プラン</h3>
-              <div class="visual"><img class="analysis-img" data-card="1" alt="味の分析画像 1"></div>
-              <details class="why">
-                <summary>なぜこれ？</summary>
-                <p id="why-1">味プロファイルに基づく提案。</p>
-              </details>
-              <button class="btn btn-order">注文へ</button>
+              <div class="visual"><img class="analysis-img" data-card="pasta-1" alt="味レーダー（パスタ1）" /></div>
+              <details class="why"><summary>なぜこれ？</summary><p id="why-pasta-1">味プロファイルに基づく提案。</p></details>
+              <button class="btn btn-order" data-go="8" type="button">注文へ</button>
             </article>
 
             <article class="reco card">
               <div class="badges"></div>
               <h3 class="h2">代替プラン</h3>
-              <div class="visual"><img class="analysis-img" data-card="2" alt="味の分析画像 2"></div>
-              <details class="why">
-                <summary>なぜこれ？</summary>
-                <p id="why-2">スパイス強め希望を考慮した代替案。</p>
-              </details>
-              <button class="btn btn-order">注文へ</button>
+              <div class="visual"><img class="analysis-img" data-card="pasta-2" alt="味レーダー（パスタ2）" /></div>
+              <details class="why"><summary>なぜこれ？</summary><p id="why-pasta-2">嗜好の隣接レンジを提案。</p></details>
+              <button class="btn btn-order" data-go="8" type="button">注文へ</button>
             </article>
 
             <article class="reco card">
               <div class="badges"></div>
               <h3 class="h2">冒険プラン</h3>
-              <div class="visual"><img class="analysis-img" data-card="3" alt="味の分析画像 3"></div>
-              <details class="why">
-                <summary>なぜこれ？</summary>
-                <p id="why-3">安全枠内で新しい味レンジを提案。</p>
-              </details>
-              <button class="btn btn-order">注文へ</button>
+              <div class="visual"><img class="analysis-img" data-card="pasta-3" alt="味レーダー（パスタ3）" /></div>
+              <details class="why"><summary>なぜこれ？</summary><p id="why-pasta-3">安全枠内で新しい味レンジ。</p></details>
+              <button class="btn btn-order" data-go="8" type="button">注文へ</button>
             </article>
           </div>
-
-          <div class="dice card">
-            <div class="dice-visual">▢</div>
-            <div class="stack gap-8">
-              <h3 class="h2">量子ダイス・スイーツ</h3>
-              <p class="body">タップで量子“崩壊”。安全枠内で味レンジ＋テクスチャを抽選。</p>
-              <button class="btn btn-ghost">抽選する</button>
-            </div>
-          </div>
-
         </div>
       </section>
 
-      <!-- 08: Order Queue（ドリンク） -->
+      <!-- 13: おすすめ（サラダ） -->
+      <section class="tpl-step" data-step="13">
+        <div class="stack gap-24">
+          <h2 class="h1">あなたへのおすすめサラダ</h2>
+          <div class="reco-grid">
+            <article class="reco card">
+              <div class="badges"></div>
+              <h3 class="h2">最適プラン</h3>
+              <div class="visual"><img class="analysis-img" data-card="salad-1" alt="味レーダー（サラダ1）" /></div>
+              <details class="why"><summary>なぜこれ？</summary><p id="why-salad-1">味プロファイルに基づく提案。</p></details>
+              <button class="btn btn-order" data-go="16" type="button">注文へ</button>
+            </article>
+
+            <article class="reco card">
+              <div class="badges"></div>
+              <h3 class="h2">代替プラン</h3>
+              <div class="visual"><img class="analysis-img" data-card="salad-2" alt="味レーダー（サラダ2）" /></div>
+              <details class="why"><summary>なぜこれ？</summary><p id="why-salad-2">嗜好の隣接レンジを提案。</p></details>
+              <button class="btn btn-order" data-go="16" type="button">注文へ</button>
+            </article>
+
+            <article class="reco card">
+              <div class="badges"></div>
+              <h3 class="h2">冒険プラン</h3>
+              <div class="visual"><img class="analysis-img" data-card="salad-3" alt="味レーダー（サラダ3）" /></div>
+              <details class="why"><summary>なぜこれ？</summary><p id="why-salad-3">安全枠内で新しい味レンジ。</p></details>
+              <button class="btn btn-order" data-go="16" type="button">注文へ</button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 14: おすすめ（クレープ） -->
+      <section class="tpl-step" data-step="14">
+        <div class="stack gap-24">
+          <h2 class="h1">あなたへのおすすめクレープ</h2>
+          <div class="reco-grid">
+            <article class="reco card">
+              <div class="badges"></div>
+              <h3 class="h2">最適プラン</h3>
+              <div class="visual"><img class="analysis-img" data-card="crepe-1" alt="味レーダー（クレープ1）" /></div>
+              <details class="why"><summary>なぜこれ？</summary><p id="why-crepe-1">味プロファイルに基づく提案。</p></details>
+              <button class="btn btn-order" data-go="17" type="button">注文へ</button>
+            </article>
+
+            <article class="reco card">
+              <div class="badges"></div>
+              <h3 class="h2">代替プラン</h3>
+              <div class="visual"><img class="analysis-img" data-card="crepe-2" alt="味レーダー（クレープ2）" /></div>
+              <details class="why"><summary>なぜこれ？</summary><p id="why-crepe-2">嗜好の隣接レンジを提案。</p></details>
+              <button class="btn btn-order" data-go="17" type="button">注文へ</button>
+            </article>
+
+            <article class="reco card">
+              <div class="badges"></div>
+              <h3 class="h2">冒険プラン</h3>
+              <div class="visual"><img class="analysis-img" data-card="crepe-3" alt="味レーダー（クレープ3）" /></div>
+              <details class="why"><summary>なぜこれ？</summary><p id="why-crepe-3">安全枠内で新しい味レンジ。</p></details>
+              <button class="btn btn-order" data-go="17" type="button">注文へ</button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 15: おすすめ（ドリンク） -->
+      <section class="tpl-step" data-step="15">
+        <div class="stack gap-24">
+          <h2 class="h1">あなたへのおすすめドリンク</h2>
+          <div class="reco-grid">
+            <article class="reco card">
+              <div class="badges"></div>
+              <h3 class="h2">最適プラン</h3>
+              <div class="visual"><img class="analysis-img" data-card="drink-1" alt="味レーダー（ドリンク1）" /></div>
+              <details class="why"><summary>なぜこれ？</summary><p id="why-drink-1">味プロファイルに基づく提案。</p></details>
+              <button class="btn btn-order" data-go="18" type="button">注文へ</button>
+            </article>
+
+            <article class="reco card">
+              <div class="badges"></div>
+              <h3 class="h2">代替プラン</h3>
+              <div class="visual"><img class="analysis-img" data-card="drink-2" alt="味レーダー（ドリンク2）" /></div>
+              <details class="why"><summary>なぜこれ？</summary><p id="why-drink-2">嗜好の隣接レンジを提案。</p></details>
+              <button class="btn btn-order" data-go="18" type="button">注文へ</button>
+            </article>
+
+            <article class="reco card">
+              <div class="badges"></div>
+              <h3 class="h2">冒険プラン</h3>
+              <div class="visual"><img class="analysis-img" data-card="drink-3" alt="味レーダー（ドリンク3）" /></div>
+              <details class="why"><summary>なぜこれ？</summary><p id="why-drink-3">安全枠内で新しい味レンジ。</p></details>
+              <button class="btn btn-order" data-go="18" type="button">注文へ</button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 08/16/17/18: Queues -->
       <section class="tpl-step" data-step="8">
         <div class="stack gap-24">
-          <h2 class="h1">調理キュー</h2>
+          <h2 class="h1">調理キュー（パスタ）</h2>
           <div class="order card">
-            <div class="order-row"><span>番号</span><strong id="order-no">A-012</strong></div>
-            <div class="order-row"><span>ETA</span><strong>04:30</strong></div>
-            <div class="order-row"><span>Live</span><div class="live placeholder">ロボシェフ</div></div>
-            <button class="btn btn-secondary" id="show-qr">受付QRを表示</button>
+            <div class="order-grid">
+              <div class="order-item"><span class="order-key">番号</span><strong id="order-no-pasta" class="order-val">P-012</strong></div>
+              <div class="order-item"><span class="order-key">ETA</span><strong class="order-val">04:30</strong></div>
+              <div class="order-item"><span class="order-key">Live</span><div class="order-val"><div class="live placeholder">ロボシェフ</div></div></div>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- 12: Order Queue（デザート：量子ダイス） -->
-      <section class="tpl-step" data-step="12">
+      <section class="tpl-step" data-step="16">
         <div class="stack gap-24">
-          <h2 class="h1">調理キュー（デザート）</h2>
+          <h2 class="h1">調理キュー（サラダ）</h2>
           <div class="order card">
-            <div class="order-row"><span>番号</span><strong id="order-no-dessert">D-027</strong></div>
-            <div class="order-row"><span>ETA</span><strong>03:10</strong></div>
-            <div class="order-row"><span>Live</span><div class="live placeholder">ロボパティシエ</div></div>
-            <button class="btn btn-secondary" id="show-qr-dessert">受付QRを表示</button>
+            <div class="order-grid">
+              <div class="order-item"><span class="order-key">番号</span><strong id="order-no-salad" class="order-val">S-102</strong></div>
+              <div class="order-item"><span class="order-key">ETA</span><strong class="order-val">03:10</strong></div>
+              <div class="order-item"><span class="order-key">Live</span><div class="order-val"><div class="live placeholder">ロボシェフ</div></div></div>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- 09: Timeout -->
-      <section class="tpl-step" data-step="9">
-        <div class="stack gap-24 center">
-          <h2 class="h1">セッションが一時停止しました</h2>
-          <div class="actions-row">
-            <button class="btn btn-primary">再開</button>
-            <button class="btn btn-secondary">最初に戻る</button>
+      <section class="tpl-step" data-step="17">
+        <div class="stack gap-24">
+          <h2 class="h1">調理キュー（クレープ）</h2>
+          <div class="order card">
+            <div class="order-grid">
+              <div class="order-item"><span class="order-key">番号</span><strong id="order-no-crepe" class="order-val">C-221</strong></div>
+              <div class="order-item"><span class="order-key">ETA</span><strong class="order-val">03:50</strong></div>
+              <div class="order-item"><span class="order-key">Live</span><div class="order-val"><div class="live placeholder">ロボパティシエ</div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tpl-step" data-step="18">
+        <div class="stack gap-24">
+          <h2 class="h1">調理キュー（ドリンク）</h2>
+          <div class="order card">
+            <div class="order-grid">
+              <div class="order-item"><span class="order-key">番号</span><strong id="order-no-drink" class="order-val">D-045</strong></div>
+              <div class="order-item"><span class="order-key">ETA</span><strong class="order-val">02:40</strong></div>
+              <div class="order-item"><span class="order-key">Live</span><div class="order-val"><div class="live placeholder">バリスタロボ</div></div></div>
+            </div>
           </div>
         </div>
       </section>
@@ -355,17 +431,17 @@
         <div class="stack gap-24">
           <h2 class="h1">スタッフヘルプ</h2>
           <div class="grid-2">
-            <button class="btn btn-primary" id="call-staff">スタッフを呼ぶ</button>
+            <button id="call-staff" class="btn btn-primary" type="button">スタッフを呼ぶ</button>
             <div class="faq card">
               <h3 class="h2">よくある質問</h3>
               <ul class="body">
                 <li>データは匿名で保存されますか？</li>
                 <li>宗教・アレルギーへの配慮は？</li>
-                <li>量子ダイスは安全ですか？</li>
+                <li>AIと量子の役割は？</li>
               </ul>
             </div>
           </div>
-          <p class="caption" aria-live="polite" id="call-status" hidden></p>
+          <p id="call-status" class="caption" aria-live="polite" hidden></p>
         </div>
       </section>
 
@@ -374,12 +450,11 @@
         <div class="stack gap-24 center">
           <h2 class="h1">ご注文ありがとうございました</h2>
           <p class="body">
-            いただいたアンケートを元に、あなた用にカスタマイズしたメニューをお持ちします。<br />
-            お好きなお席にお掛けになって、お待ちくださいませ。
+            いただいた回答をもとに、あなただけのメニューをご用意いたします。<br />
+            お好きなお席でくつろぎながら、出来上がりをお待ちください。
           </p>
           <div class="actions-row">
-            <button class="btn btn-primary" data-jump="1">トップに戻る</button>
-            <button class="btn btn-secondary" data-jump="7">もう一杯つくる</button>
+            <button class="btn btn-primary" type="button" data-jump="1">トップに戻る</button>
           </div>
         </div>
       </section>
@@ -388,15 +463,14 @@
 
     <!-- Footer -->
     <footer class="org-footer" role="contentinfo">
-      <button class="btn btn-secondary">戻る</button>
+      <button id="footer-back" class="btn btn-secondary" type="button">戻る</button>
       <div class="progress small" aria-hidden="true">
         <ol>
-          <li class="is-done"></li>
           <li class="is-active"></li>
           <li></li><li></li><li></li><li></li>
         </ol>
       </div>
-      <button class="btn btn-primary">次へ</button>
+      <button id="footer-next" class="btn btn-primary" type="button">次へ</button>
     </footer>
   </div>
   <script src="./js/script.js"></script>
