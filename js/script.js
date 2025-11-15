@@ -11,7 +11,9 @@ const state = {
     salad: { sweet:20, sour:40, bitter:10, umami:30, salty:20, spice:10 },
     crepe: { sweet:70, sour:20, bitter:5,  umami:10, salty:10, spice:10 },
     drink: { sweet:40, sour:30, bitter:20, umami:10, salty:10, spice:15 }
-  }
+  },
+  pastaDoneness: null,
+  crepeSweetness: null
 };
 const flavorJP = { sweet:'甘', sour:'酸', bitter:'苦', umami:'旨', salty:'塩', spice:'スパイス' };
 
@@ -35,6 +37,26 @@ const setProgress = (step) => {
     });
   });
 };
+
+function closeLangMenu(){
+  const langMenu = document.getElementById('lang-menu');
+  const langToggle = document.getElementById('lang-toggle');
+  if (!langMenu || langMenu.hidden) return;
+  langMenu.hidden = true;
+  langToggle?.setAttribute('aria-expanded','false');
+  langMenu.querySelectorAll('[aria-current="true"]').forEach(b=>b.removeAttribute('aria-current'));
+}
+
+function updateFooterNextRequirement(){
+  if (current === 8){
+    btnNext.disabled = !state.pastaDoneness;
+  } else if (current === 17){
+    btnNext.disabled = !state.crepeSweetness;
+  } else {
+    btnNext.disabled = false;
+  }
+}
+
 const show = (n) => {
   steps.forEach(s => s.removeAttribute('data-active'));
   const target = steps.find(s => Number(s.dataset.step) === n);
@@ -43,7 +65,6 @@ const show = (n) => {
   current = n;
   setProgress(current);
 
-  // Footer visibility
   if (current === 1) {
     btnBack.classList.add('is-hidden');
     btnNext.classList.add('is-hidden');
@@ -70,12 +91,11 @@ const show = (n) => {
     updateWhyText();
   }
 
-  // 言語メニューは遷移時に必ず閉じる
   closeLangMenu();
-
-  // 画面トップへ
+  updateFooterNextRequirement();
   window.scrollTo({ top: 0, behavior: 'instant' });
 };
+
 const nextOf = (step) => {
   const flow = { 1:2, 2:3, 3:4, 4:6, 6:7, 7:8, 8:13, 13:16, 16:14, 14:17, 17:15, 15:18, 18:10, 10:11, 11:1 };
   return flow[step] ?? step;
@@ -89,6 +109,14 @@ setProgress(current);
 /* ---------------- Footer Nav ---------------- */
 btnNext.addEventListener('click', () => {
   if (current === 6) return runAnalyze(); // 「分析」
+  if (current === 8 && !state.pastaDoneness){
+    alert('麺のゆで加減をお選びください。');
+    return;
+  }
+  if (current === 17 && !state.crepeSweetness){
+    alert('甘さ加減をお選びください。');
+    return;
+  }
   show(nextOf(current));
 });
 btnBack.addEventListener('click', () => show(backOf(current)));
@@ -110,12 +138,6 @@ function openLangMenu(){
   langMenu.querySelectorAll('[aria-current="true"]').forEach(b=>b.removeAttribute('aria-current'));
   first?.setAttribute('aria-current','true');
   first?.focus({preventScroll:true});
-}
-function closeLangMenu(){
-  if (langMenu.hidden) return;
-  langMenu.hidden = true;
-  langToggle.setAttribute('aria-expanded','false');
-  langMenu.querySelectorAll('[aria-current="true"]').forEach(b=>b.removeAttribute('aria-current'));
 }
 langToggle?.addEventListener('click', (e)=>{
   e.stopPropagation();
@@ -360,7 +382,6 @@ function runAnalyze(){
   if (!consent || !consent.checked){
     alert('同意にチェックを入れてください。'); return;
   }
-  // overlay を都度生成（存在しない限りクリック阻害なし）
   const ov = document.createElement('div');
   ov.className = 'overlay';
   ov.innerHTML = `
@@ -538,8 +559,7 @@ document.querySelectorAll('.btn-order[data-go]').forEach(btn=>{
 
     showCallOverlay(ticket);
 
-    clearTimeout(cooldownTimer);
-    cooldownTimer = setTimeout(()=>{
+    setTimeout(()=>{
       callBtn.disabled = false;
       callBtn.textContent = original;
       callBtn.removeAttribute('aria-disabled');
@@ -551,9 +571,34 @@ document.querySelectorAll('.btn-order[data-go]').forEach(btn=>{
   callBtn.addEventListener('click', notifyStaff);
 })();
 
+/* ---------------- Pasta Doneness: handlers ---------------- */
+(function setupPastaDoneness(){
+  const selectedEl = document.getElementById('pasta-doneness-selected');
+  const inputs = document.querySelectorAll('input[name="pasta-doneness"]');
+  inputs.forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      state.pastaDoneness = inp.value;
+      if (selectedEl) selectedEl.textContent = state.pastaDoneness || '未選択';
+      updateFooterNextRequirement();
+    });
+  });
+})();
+
+/* ---------------- Crepe Sweetness: handlers ---------------- */
+(function setupCrepeSweetness(){
+  const selectedEl = document.getElementById('crepe-sweetness-selected');
+  const inputs = document.querySelectorAll('input[name="crepe-sweetness"]');
+  inputs.forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      state.crepeSweetness = inp.value;
+      if (selectedEl) selectedEl.textContent = state.crepeSweetness || '未選択';
+      updateFooterNextRequirement();
+    });
+  });
+})();
+
 /* ---------------- Init show ---------------- */
 function initialShow(){
-  // どのセクションも前面を覆わないため display 管理のみ
   show(current);
 }
 initialShow();

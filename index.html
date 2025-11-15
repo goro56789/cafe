@@ -59,6 +59,8 @@
       <!-- 01: Start -->
       <section class="tpl-step" data-step="1" data-active>
         <div class="stack gap-24 center">
+          <!-- ★ ロゴ画像（中央寄せ） -->
+          <img src="./img/quantumcafe.png" alt="Quantm Café ロゴ" class="brand-logo" />
           <h2 class="welcome-title">ようこそ、Quantm Caféへ</h2>
           <p class="lead">あなたの好みと食の制約に合わせて、最適なパスタとサラダ、ドリンクをご提案します。</p>
           <button id="start-btn" class="btn btn-primary btn-lg" type="button">スタート</button>
@@ -377,11 +379,63 @@
       <section class="tpl-step" data-step="8">
         <div class="stack gap-24">
           <h2 class="h1">調理キュー（パスタ）</h2>
+
+          <!-- 注文状況 -->
           <div class="order card">
             <div class="order-grid">
-              <div class="order-item"><span class="order-key">番号</span><strong id="order-no-pasta" class="order-val">P-012</strong></div>
-              <div class="order-item"><span class="order-key">ETA</span><strong class="order-val">04:30</strong></div>
-              <div class="order-item"><span class="order-key">Live</span><div class="order-val"><div class="live placeholder">ロボシェフ</div></div></div>
+              <div class="order-item">
+                <span class="order-key">番号</span>
+                <strong id="order-no-pasta" class="order-val">P-012</strong>
+              </div>
+              <div class="order-item">
+                <span class="order-key">ETA</span>
+                <strong class="order-val">04:30</strong>
+              </div>
+              <div class="order-item">
+                <span class="order-key">Live</span>
+                <div class="order-val"><div class="live placeholder">ロボシェフ</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 麺のゆで加減 -->
+          <div class="card stack gap-16" id="pasta-doneness-card">
+            <div class="card-head">
+              <h3 class="h2">麺のゆで加減</h3>
+              <p class="caption">お好みの茹で上がりをお選びください。選択後に「次へ」を押すとサラダへ進みます。</p>
+            </div>
+
+            <fieldset class="choice-group" aria-describedby="doneness-help">
+              <legend class="sr-only">麺のゆで加減の選択</legend>
+
+              <div class="radio-card">
+                <input type="radio" id="doneness-al" name="pasta-doneness" value="アルデンテ" />
+                <label for="doneness-al">
+                  <span class="choice-title">アルデンテ</span>
+                  <span class="choice-desc">芯をわずかに残した、かための食感</span>
+                </label>
+              </div>
+
+              <div class="radio-card">
+                <input type="radio" id="doneness-std" name="pasta-doneness" value="標準" />
+                <label for="doneness-std">
+                  <span class="choice-title">標準</span>
+                  <span class="choice-desc">バランスの良いおすすめの茹で上がり</span>
+                </label>
+              </div>
+
+              <div class="radio-card">
+                <input type="radio" id="doneness-soft" name="pasta-doneness" value="柔らかめ" />
+                <label for="doneness-soft">
+                  <span class="choice-title">柔らかめ</span>
+                  <span class="choice-desc">ソースとなじむ、やわらかい食感</span>
+                </label>
+              </div>
+            </fieldset>
+            <p id="doneness-help" class="caption">※ 選択はいつでも戻って変更できます。</p>
+
+            <div class="selected-hint" aria-live="polite">
+              現在の選択：<strong id="pasta-doneness-selected">未選択</strong>
             </div>
           </div>
         </div>
@@ -403,11 +457,54 @@
       <section class="tpl-step" data-step="17">
         <div class="stack gap-24">
           <h2 class="h1">調理キュー（クレープ）</h2>
+
           <div class="order card">
             <div class="order-grid">
               <div class="order-item"><span class="order-key">番号</span><strong id="order-no-crepe" class="order-val">C-221</strong></div>
               <div class="order-item"><span class="order-key">ETA</span><strong class="order-val">03:50</strong></div>
               <div class="order-item"><span class="order-key">Live</span><div class="order-val"><div class="live placeholder">ロボパティシエ</div></div></div>
+            </div>
+          </div>
+
+          <!-- ★ 甘さ加減 -->
+          <div class="card stack gap-16" id="crepe-sweetness-card">
+            <div class="card-head">
+              <h3 class="h2">甘さ加減</h3>
+              <p class="caption">お好みの甘さをお選びください。選択後に「次へ」を押すとドリンクへ進みます。</p>
+            </div>
+
+            <fieldset class="choice-group" aria-describedby="sweetness-help">
+              <legend class="sr-only">甘さ加減の選択</legend>
+
+              <div class="radio-card">
+                <input type="radio" id="sweetness-sweet" name="crepe-sweetness" value="甘さ" />
+                <label for="sweetness-sweet">
+                  <span class="choice-title">甘さ</span>
+                  <span class="choice-desc">しっかり甘めで満足感のある味わい</span>
+                </label>
+              </div>
+
+              <div class="radio-card">
+                <input type="radio" id="sweetness-light" name="crepe-sweetness" value="微甘" />
+                <label for="sweetness-light">
+                  <span class="choice-title">微甘</span>
+                  <span class="choice-desc">控えめな甘さで軽い仕上がり</span>
+                </label>
+              </div>
+
+              <div class="radio-card">
+                <input type="radio" id="sweetness-none" name="crepe-sweetness" value="甘くない" />
+                <label for="sweetness-none">
+                  <span class="choice-title">甘くない</span>
+                  <span class="choice-desc">糖分を抑えたすっきりテイスト</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <p id="sweetness-help" class="caption">※ 選択はいつでも戻って変更できます。</p>
+
+            <div class="selected-hint" aria-live="polite">
+              現在の選択：<strong id="crepe-sweetness-selected">未選択</strong>
             </div>
           </div>
         </div>
@@ -416,13 +513,13 @@
       <section class="tpl-step" data-step="18">
         <div class="stack gap-24">
           <h2 class="h1">調理キュー（ドリンク）</h2>
-          <div class="order card">
-            <div class="order-grid">
-              <div class="order-item"><span class="order-key">番号</span><strong id="order-no-drink" class="order-val">D-045</strong></div>
-              <div class="order-item"><span class="order-key">ETA</span><strong class="order-val">02:40</strong></div>
-              <div class="order-item"><span class="order-key">Live</span><div class="order-val"><div class="live placeholder">バリスタロボ</div></div></div>
-            </div>
+        <div class="order card">
+          <div class="order-grid">
+            <div class="order-item"><span class="order-key">番号</span><strong id="order-no-drink" class="order-val">D-045</strong></div>
+            <div class="order-item"><span class="order-key">ETA</span><strong class="order-val">02:40</strong></div>
+            <div class="order-item"><span class="order-key">Live</span><div class="order-val"><div class="live placeholder">バリスタロボ</div></div></div>
           </div>
+        </div>
         </div>
       </section>
 
