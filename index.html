@@ -16,507 +16,502 @@
     />
     <link rel="stylesheet" href="./CSS/style.css" />
     <link rel="stylesheet" href="./CSS/reset.css" />
-    <script defer src="./js/script.js"></script>
   </head>
 <body>
-  <div class="app">
-    <!-- Header -->
-    <header class="org-header" role="banner">
-      <h1 class="brand-title" aria-label="Taste Carte — あなた専用メニューを描く一枚のカルテ">
-        <span class="brand-main">Taste Carte</span>
-        <span class="brand-sub">あなた専用メニューを描く一枚のカルテ</span>
-      </h1>
+  <header class="app-header">
+    <div class="app-title-wrap">
+      <div class="app-title-main">Taste Carte</div>
+      <div class="app-title-sub">― あなた専用メニューを描く一枚のカルテ ―</div>
+    </div>
 
-      <div class="header-actions" role="group" aria-label="ヘッダー操作">
-        <button class="btn btn-ghost" aria-label="ヘルプ">?</button>
-
-        <!-- Language dropdown trigger -->
-        <div class="lang-wrap">
-          <button
-            id="lang-button"
-            class="btn btn-ghost"
-            aria-haspopup="listbox"
-            aria-expanded="false"
-            aria-controls="lang-menu"
-          >
-            <span id="lang-indicator">JP</span>
-          </button>
-          <ul id="lang-menu" class="lang-menu" role="listbox" tabindex="-1" hidden>
-            <li role="option" data-lang="ja" aria-selected="true">日本語（JP）</li>
-            <li role="option" data-lang="en">English（EN）</li>
-            <li role="option" data-lang="zh">简体中文（ZH）</li>
-            <li role="option" data-lang="ko">한국어（KO）</li>
-          </ul>
+    <div class="header-controls">
+      <div class="lang-selector">
+        <button id="langToggle" class="lang-button" aria-haspopup="true" aria-expanded="false">
+          <span id="langLabel">JP</span> ▾
+        </button>
+        <div id="langDropdown" class="lang-dropdown" role="menu">
+          <button type="button" class="lang-option" data-lang="JP">JP</button>
+          <button type="button" class="lang-option" data-lang="EN">EN</button>
         </div>
-
-        <button class="fab-accessibility" aria-label="アクセシビリティ設定">A+</button>
       </div>
-    </header>
+      <button id="fontToggle" class="font-button">A+</button>
+    </div>
+  </header>
 
-    <!-- Progress (top) -->
-    <nav class="progress" aria-label="ステップ進捗">
-      <ol>
-        <li class="is-active"></li>
-        <li></li><li></li><li></li><li></li><li></li>
-      </ol>
-    </nav>
+  <main class="app-main">
+    <!-- 0. ウェルカム -->
+    <section class="page page-active" data-step="0" aria-label="スタート画面">
+      <div class="welcome-page">
+        <img src="./img/quantumcafe.png" alt="Quantum Café ロゴ" class="welcome-logo" />
+        <h1 class="welcome-heading">ようこそ、Quantum Caféへ</h1>
+        <p class="welcome-sub">
+          あなたの好みと食の制約に合わせて、最適なパスタ・サラダ・クレープ・ドリンクをご提案します。
+        </p>
+        <p class="welcome-note">
+          このあとは、順番に質問にお答えください。<br />
+          <span class="welcome-note-small">所要時間の目安： 約1〜2分</span>
+        </p>
+        <button id="startButton" class="primary-button large">スタート</button>
+      </div>
+    </section>
 
-    <!-- Content -->
-    <main class="content" role="main">
-      <!-- 01: Welcome (Start) -->
-      <section class="tpl-step" data-step="1" data-active>
-        <div class="stack gap-24 center">
-          <img src="./img/quantumcafe.png" alt="Taste Carte ロゴ" class="logo-hero" loading="lazy" />
-          <h2 class="h1">ようこそ、Quantum Caféへ</h2>
-          <p class="hero-copy">
-            あなたの好みと食の制約に合わせて、最適なパスタ・サラダ・クレープ・ドリンクをご提案します。
+    <!-- 1. 好きな食べ物 -->
+    <section class="page" data-step="1" aria-label="好きな食べ物">
+      <div class="page-inner">
+        <h2 class="page-title">好きな食べ物を5つ教えてください</h2>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>音声入力</h3>
+            <p class="card-help">
+              マイクを押して話し、「完了」で次の入力欄へ。5つ入力すると自動で次へ進みます。
+            </p>
+          </div>
+          <div class="voice-input-list" id="foodVoiceList">
+            <!-- 1〜5行を JS で生成 -->
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>ペン入力</h3>
+            <p class="card-help">自由にメモできます（任意）。</p>
+          </div>
+          <textarea id="foodFreeText" class="text-area" rows="4" placeholder="好きな食べ物や、細かいこだわりなどがあればご記入ください。"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 好きなスイーツ・お菓子 -->
+    <section class="page" data-step="2" aria-label="好きなスイーツやお菓子">
+      <div class="page-inner">
+        <h2 class="page-title">好きなスイーツやお菓子を5つ選んでください</h2>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>音声入力</h3>
+            <p class="card-help">
+              マイクを押して話し、「完了」で次の入力欄へ。5つ入力すると自動で次へ進みます。
+            </p>
+          </div>
+          <div class="voice-input-list" id="sweetsVoiceList">
+            <!-- 1〜5行を JS で生成 -->
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>ペン入力</h3>
+            <p class="card-help">自由にメモできます（任意）。</p>
+          </div>
+          <textarea id="sweetsFreeText" class="text-area" rows="4" placeholder="好きなお菓子や甘さの好みがあればご記入ください。"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 食の制約 -->
+    <section class="page" data-step="3" aria-label="食の制約">
+      <div class="page-inner">
+        <h2 class="page-title">食の制約</h2>
+
+        <!-- アレルギー -->
+        <div class="card">
+          <div class="card-header">
+            <h3>アレルギー</h3>
+          </div>
+          <input
+            id="allergySearch"
+            type="text"
+            class="input"
+            placeholder="食材を検索（例：乳、小麦、えび…）"
+          />
+          <p class="card-help small">
+            Enterキーで追加／選択できます。タップしてオン・オフ切り替え。
           </p>
-          <p class="caption">このあとは、順番に質問にお答えください。<br />所要時間の目安（約1〜2分）</p>
-          <button class="btn btn-primary btn-start" aria-label="診断をはじめる">スタート</button>
+          <div id="allergyChips" class="chip-container">
+            <!-- JS で 28品目チップ生成 -->
+          </div>
         </div>
-      </section>
 
-      <!-- 02: Favorites -->
-      <section class="tpl-step" data-step="2">
-        <div class="stack gap-24">
-          <h2 class="h1">好きな食べ物を5つ選んでください</h2>
-
-          <!-- 音声入力（上） -->
-          <div class="card stack gap-16">
-            <div class="row-between">
-              <h3 class="h2">音声入力</h3>
-              <span class="caption">マイク→完了で次の欄へ。5つ入力で自動的に次へ進みます。</span>
+        <!-- 宗教的禁忌 -->
+        <div class="two-column">
+          <div class="card">
+            <div class="card-header">
+              <h3>宗教的禁忌</h3>
+              <p class="card-sub">Halal / Kosher / 豚NG / 酒NG など</p>
             </div>
-
-            <div id="voice-banner" class="notice is-hidden" role="status" aria-live="polite">
-              音声認識が利用できない環境です。各欄はテキスト入力で記入してください。
-            </div>
-
-            <div class="voice-list">
-              <div class="voice-row" data-index="1">
-                <label for="voice-out-1" class="label">1.</label>
-                <input id="voice-out-1" class="voice-out" type="text" placeholder="未入力" aria-label="1つ目の好きな食べ物" />
-                <button id="mic-1" class="btn btn-secondary mic" type="button" aria-label="1つ目を音声入力">🎤 マイク</button>
-                <button id="done-1" class="btn btn-ghost done" type="button" aria-label="1つ目 入力を完了">完了</button>
-              </div>
-              <div class="voice-row" data-index="2">
-                <label for="voice-out-2" class="label">2.</label>
-                <input id="voice-out-2" class="voice-out" type="text" placeholder="未入力" aria-label="2つ目の好きな食べ物" />
-                <button id="mic-2" class="btn btn-secondary mic" type="button" aria-label="2つ目を音声入力">🎤 マイク</button>
-                <button id="done-2" class="btn btn-ghost done" type="button" aria-label="2つ目 入力を完了">完了</button>
-              </div>
-              <div class="voice-row" data-index="3">
-                <label for="voice-out-3" class="label">3.</label>
-                <input id="voice-out-3" class="voice-out" type="text" placeholder="未入力" aria-label="3つ目の好きな食べ物" />
-                <button id="mic-3" class="btn btn-secondary mic" type="button" aria-label="3つ目を音声入力">🎤 マイク</button>
-                <button id="done-3" class="btn btn-ghost done" type="button" aria-label="3つ目 入力を完了">完了</button>
-              </div>
-              <div class="voice-row" data-index="4">
-                <label for="voice-out-4" class="label">4.</label>
-                <input id="voice-out-4" class="voice-out" type="text" placeholder="未入力" aria-label="4つ目の好きな食べ物" />
-                <button id="mic-4" class="btn btn-secondary mic" type="button" aria-label="4つ目を音声入力">🎤 マイク</button>
-                <button id="done-4" class="btn btn-ghost done" type="button" aria-label="4つ目 入力を完了">完了</button>
-              </div>
-              <div class="voice-row" data-index="5">
-                <label for="voice-out-5" class="label">5.</label>
-                <input id="voice-out-5" class="voice-out" type="text" placeholder="未入力" aria-label="5つ目の好きな食べ物" />
-                <button id="mic-5" class="btn btn-secondary mic" type="button" aria-label="5つ目を音声入力">🎤 マイク</button>
-                <button id="done-5" class="btn btn-ghost done" type="button" aria-label="5つ目 入力を完了">完了</button>
-              </div>
+            <div class="checkbox-list">
+              <label><input type="checkbox" name="religion" value="halal" /> ハラール対応希望</label>
+              <label><input type="checkbox" name="religion" value="no-pork" /> 豚肉NG</label>
+              <label><input type="checkbox" name="religion" value="no-alcohol" /> アルコールNG</label>
             </div>
           </div>
 
-          <!-- ペン入力（下） -->
-          <div class="card stack gap-16">
-            <h3 class="h2">ペン入力</h3>
-            <p class="caption">自由にメモできます（任意）。</p>
-            <canvas id="pen-canvas" width="360" height="200" aria-label="手書き入力エリア"></canvas>
-            <div class="actions-row">
-              <button class="btn btn-secondary" id="clear-canvas">クリア</button>
-              <button class="btn btn-ghost" id="save-canvas">保存</button>
+          <!-- ライフスタイル -->
+          <div class="card">
+            <div class="card-header">
+              <h3>ライフスタイル</h3>
+              <p class="card-sub">ヴィーガン／ベジタリアンなど</p>
+            </div>
+            <div class="checkbox-list">
+              <label><input type="checkbox" name="lifestyle" value="vegan" /> ヴィーガン</label>
+              <label><input type="checkbox" name="lifestyle" value="vegetarian" /> ベジタリアン</label>
+              <label><input type="checkbox" name="lifestyle" value="lacto" /> ラクト（乳製品OK）</label>
+              <label><input type="checkbox" name="lifestyle" value="pescetarian" /> ペスカタリアン</label>
             </div>
           </div>
         </div>
-      </section>
 
-      <!-- 03: Restrictions -->
-      <section class="tpl-step" data-step="3">
-        <div class="stack gap-24">
-          <h2 class="h1">食の制約</h2>
+        <!-- 食物不耐性 -->
+        <div class="card">
+          <div class="card-header">
+            <h3>食物不耐性</h3>
+            <p class="card-sub">体質的に量が多いとつらくなるもの</p>
+          </div>
+          <div class="checkbox-list checkbox-inline">
+            <label><input type="checkbox" name="intolerance" value="lactose" /> 乳糖不耐症</label>
+            <label><input type="checkbox" name="intolerance" value="gluten" /> グルテン不耐症</label>
+            <label><input type="checkbox" name="intolerance" value="fructose" /> 果糖不耐症</label>
+            <label><input type="checkbox" name="intolerance" value="other" /> その他（スタッフに相談したい）</label>
+          </div>
+        </div>
+      </div>
+    </section>
 
-          <div class="card stack gap-16">
-            <h3 class="h2">アレルギー</h3>
-            <div class="search search-lg">
-              <input type="search" placeholder="食材を検索（例：乳、小麦…）" aria-label="アレルギー検索" id="allergen-search" />
+    <!-- 4. 体調・気分 -->
+    <section class="page" data-step="4" aria-label="体調と気分">
+      <div class="page-inner">
+        <h2 class="page-title">体調・気分</h2>
+
+        <div class="two-column">
+          <!-- 自動測定 -->
+          <div class="card">
+            <div class="card-header">
+              <h3>自動測定を試す</h3>
             </div>
-            <div class="chips wrap allergy-group" role="group" aria-label="アレルゲン（28品目＋）" id="allergen-chips"></div>
-            <div class="selected-pills" aria-live="polite" id="allergen-pills"></div>
+            <button id="autoMeasureButton" class="primary-button full-width">自動測定を試す</button>
+            <p class="card-help small">
+              任意。将来、カメラPPG／ウォッチ連携に対応予定です。
+            </p>
+            <p id="autoMeasureStatus" class="card-help small muted"></p>
           </div>
 
-          <!-- 3カラムに再編：宗教 / ライフスタイル / 食物不耐症 -->
-          <div class="grid-3">
-            <div class="card toggle-card">
-              <div class="toggle-head">
-                <h3 class="h2">宗教的禁忌</h3>
-                <span class="caption">ハラール / コーシャ / 豚NG / 酒NG</span>
-              </div>
-              <div class="toggle-list">
-                <label class="switch"><input type="checkbox" data-religion="halal" />ハラール</label>
-                <label class="switch"><input type="checkbox" data-religion="kosher" />コーシャ</label>
-                <label class="switch"><input type="checkbox" data-religion="pork_ng" />豚NG</label>
-                <label class="switch"><input type="checkbox" data-religion="alcohol_ng" />アルコールNG</label>
-              </div>
+          <!-- 気分スライダー -->
+          <div class="card">
+            <div class="card-header">
+              <h3>いまの気分（さっぱり ↔ こってり）</h3>
+            </div>
+            <input
+              id="moodSlider"
+              type="range"
+              min="0"
+              max="100"
+              value="50"
+              class="slider"
+            />
+            <div class="slider-labels">
+              <span>さっぱり</span>
+              <span>ふつう</span>
+              <span>こってり</span>
             </div>
 
-            <div class="card toggle-card">
-              <div class="toggle-head">
-                <h3 class="h2">ライフスタイル</h3>
-                <span class="caption">ヴィーガン / ベジ各種</span>
-              </div>
-              <div class="toggle-list">
-                <label class="switch"><input type="checkbox" data-life="vegan" />ヴィーガン</label>
-                <label class="switch"><input type="checkbox" data-life="lacto" />ラクト</label>
-                <label class="switch"><input type="checkbox" data-life="ovo" />オボ</label>
-                <label class="switch"><input type="checkbox" data-life="pesco" />ペスコ</label>
-                <label class="switch"><input type="checkbox" data-life="flexi" />フレキシ</label>
-              </div>
-            </div>
-
-            <!-- 新規：食物不耐症 -->
-            <div class="card toggle-card">
-              <div class="toggle-head">
-                <h3 class="h2">食物不耐症</h3>
-                <span class="caption">乳糖・グルテンなど</span>
-              </div>
-              <div class="toggle-list">
-                <label class="switch"><input type="checkbox" data-intolerance="lactose" />乳糖不耐症</label>
-                <label class="switch"><input type="checkbox" data-intolerance="gluten" />グルテン不耐症</label>
-              </div>
+            <div class="checkbox-list mood-options">
+              <label><input type="checkbox" name="condition" value="pregnant" /> 妊娠中</label>
+              <label><input type="checkbox" name="condition" value="non-caffeine" /> ノンカフェイン</label>
+              <label><input type="checkbox" name="condition" value="low-caffeine" /> 低カフェイン</label>
+              <label><input type="checkbox" name="condition" value="low-sugar" /> 低糖</label>
+              <label><input type="checkbox" name="condition" value="low-fat" /> 低脂</label>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- 04: Condition -->
-      <section class="tpl-step" data-step="4">
-        <div class="stack gap-24">
-          <h2 class="h1">体調・気分</h2>
+    <!-- 5. サマリー＆同意 -->
+    <section class="page" data-step="5" aria-label="サマリーと同意">
+      <div class="page-inner">
+        <h2 class="page-title">サマリー＆同意</h2>
 
-          <div class="grid-2">
-            <div class="card stack gap-16">
-              <button class="btn btn-primary" id="btn-auto-measure">自動測定を試す</button>
-              <p class="caption">※任意。カメラ/ウォッチ連携（対応環境のみ）</p>
-            </div>
-
-            <div class="card stack gap-16">
-              <label class="label">いまの気分（さっぱり↔こってり）</label>
-              <input type="range" min="0" max="100" value="35" aria-label="気分スライダー" id="mood-slider" />
-              <div class="toggles">
-                <label class="switch"><input type="checkbox" id="low-caffeine" />低カフェイン</label>
-                <label class="switch"><input type="checkbox" id="decaf" />カフェインレス</label>
-                <label class="switch"><input type="checkbox" id="low-sugar" />低糖</label>
-                <label class="switch"><input type="checkbox" id="low-fat" />低脂</label>
-              </div>
-            </div>
+        <div class="summary-list">
+          <div class="summary-row">
+            <div class="summary-label">好み</div>
+            <div class="summary-value" id="summaryTaste">―</div>
+            <button class="secondary-button summary-edit" data-edit-step="1">編集</button>
           </div>
-
-          <!-- 別項目：妊娠中 -->
-          <div class="card stack gap-8">
-            <h3 class="h2">健康状態（申告）</h3>
-            <div class="toggles">
-              <label class="switch"><input type="checkbox" id="pregnant" />妊娠中</label>
-            </div>
-            <p class="caption">※食材・飲料の提案に配慮します。</p>
+          <div class="summary-row">
+            <div class="summary-label">制約</div>
+            <div class="summary-value" id="summaryRestriction">―</div>
+            <button class="secondary-button summary-edit" data-edit-step="3">編集</button>
+          </div>
+          <div class="summary-row">
+            <div class="summary-label">体調</div>
+            <div class="summary-value" id="summaryCondition">気分 50</div>
+            <button class="secondary-button summary-edit" data-edit-step="4">編集</button>
           </div>
         </div>
-      </section>
 
-      <!-- 06: Summary & Consent -->
-      <section class="tpl-step" data-step="6">
-        <div class="stack gap-24">
-          <h2 class="h1">サマリー & 同意</h2>
-          <ul class="summary">
-            <li class="summary-row">
-              <span class="summary-key">好きな食べ物</span>
-              <span class="summary-val" id="summary-favs">—</span>
-              <button class="btn btn-edit" data-jump="2" aria-label="好きな食べ物を編集">編集</button>
-            </li>
-            <li class="summary-row">
-              <span class="summary-key">制約</span>
-              <span class="summary-val" id="summary-restrictions">—</span>
-              <button class="btn btn-edit" data-jump="3" aria-label="制約を編集">編集</button>
-            </li>
-            <li class="summary-row">
-              <span class="summary-key">体調</span>
-              <span class="summary-val" id="summary-condition">—</span>
-              <button class="btn btn-edit" data-jump="4" aria-label="体調を編集">編集</button>
-            </li>
-          </ul>
+        <label class="consent-line">
+          <input type="checkbox" id="consentCheckbox" />
+          匿名IDで一時保存・会期終了後に削除に同意します
+        </label>
+        <p class="card-help small">「なぜこの質問？」 安全でおいしい提案のため</p>
 
-          <label class="consent">
-            <input type="checkbox" id="consent-check" />
-            匿名IDで一時保存・会期終了後に削除に同意します
-          </label>
+        <div class="summary-actions">
+          <button id="analyzeButton" class="primary-button" disabled>分析</button>
+        </div>
+      </div>
+    </section>
 
-          <div class="actions-row">
-            <button id="btn-analyze" class="btn btn-primary btn-analyze" disabled>
-              <span class="spin-dot" aria-hidden="true"></span>
-              <span class="analyze-label">分析</span>
+    <!-- 6. あなたへのおすすめパスタ -->
+    <section class="page" data-step="6" aria-label="おすすめパスタ">
+      <div class="page-inner">
+        <h2 class="page-title">あなたへのおすすめパスタ</h2>
+        <div class="recommendation-list" id="pastaRecommendations">
+          <!-- JS で3プラン生成 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. 調理キュー（パスタ） -->
+    <section class="page" data-step="7" aria-label="調理キュー パスタ">
+      <div class="page-inner">
+        <h2 class="page-title">調理キュー（パスタ）</h2>
+
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-label">番号</div>
+            <div class="status-value" id="queuePastaNo">P-012</div>
+          </div>
+          <div class="status-card">
+            <div class="status-label">ETA</div>
+            <div class="status-value" id="queuePastaEta">04:30</div>
+          </div>
+          <div class="status-card">
+            <div class="status-label">Live</div>
+            <div class="status-value" id="queuePastaLive">ロボシェフ</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>麺のゆで加減</h3>
+            <p class="card-help">
+              お好みの茹で上がりをお選びください。選択後に「次へ」を押すとサラダへ進みます。
+            </p>
+          </div>
+
+          <div class="option-card-row" data-group="pasta-doneness">
+            <button type="button" class="option-card" data-value="al-dente">
+              <div class="option-title">アルデンテ</div>
+              <div class="option-body">芯をわずかに残した、かための食感</div>
+            </button>
+            <button type="button" class="option-card" data-value="normal">
+              <div class="option-title">標準</div>
+              <div class="option-body">バランスの良いおすすめの茹で上がり</div>
+            </button>
+            <button type="button" class="option-card" data-value="soft">
+              <div class="option-title">柔らかめ</div>
+              <div class="option-body">ソースとなじむ、やわらかい食感</div>
             </button>
           </div>
-          <p class="caption">※「分析」は1〜2秒で完了します。</p>
-        </div>
-      </section>
 
-      <!-- 07x: Recommendations（pasta/salad/crepe/drink） -->
-      <section class="tpl-step" data-step="71">
-        <div class="stack gap-24">
-          <h2 class="h1">あなたへのおすすめ（パスタ）</h2>
-          <div class="reco-grid">
-            <article class="reco card reco-eq">
-              <h3 class="h2">最適プラン</h3>
-              <div class="visual"><img class="analysis-img" data-reco="pasta-1" alt="味の分析（パスタ 最適）" loading="lazy"></div>
-              <details class="why"><summary>なぜこれ？</summary><p id="why-pasta-1">上位味軸に最も合致する構成。</p></details>
-              <button class="btn btn-order" data-order="pasta">注文へ</button>
-            </article>
-            <article class="reco card reco-eq">
-              <h3 class="h2">代替プラン</h3>
-              <div class="visual"><img class="analysis-img" data-reco="pasta-2" alt="味の分析（パスタ 代替）" loading="lazy"></div>
-              <details class="why"><summary>なぜこれ？</summary><p id="why-pasta-2">隣接する味レンジを強調。</p></details>
-              <button class="btn btn-order" data-order="pasta">注文へ</button>
-            </article>
-            <article class="reco card reco-eq">
-              <h3 class="h2">冒険プラン</h3>
-              <div class="visual"><img class="analysis-img" data-reco="pasta-3" alt="味の分析（パスタ 冒険）" loading="lazy"></div>
-              <details class="why"><summary>なぜこれ？</summary><p id="why-pasta-3">安全枠内で新規レンジを提案。</p></details>
-              <button class="btn btn-order" data-order="pasta">注文へ</button>
-            </article>
+          <p class="card-help small">※ 選択はいつでも戻って変更できます。</p>
+          <div class="current-selection">
+            現在の選択：<span id="pastaDonenessLabel">未選択</span>
           </div>
         </div>
-      </section>
-
-      <section class="tpl-step" data-step="72">
-        <div class="stack gap-24">
-          <h2 class="h1">あなたへのおすすめ（サラダ）</h2>
-          <div class="reco-grid">
-            <article class="reco card reco-eq">
-              <h3 class="h2">最適プラン</h3>
-              <div class="visual"><img class="analysis-img" data-reco="salad-1" alt="味の分析（サラダ 最適）" loading="lazy"></div>
-              <details class="why"><summary>なぜこれ？</summary><p id="why-salad-1">上位味軸に最も合致する構成。</p></details>
-              <button class="btn btn-order" data-order="salad">注文へ</button>
-            </article>
-            <article class="reco card reco-eq">
-              <h3 class="h2">代替プラン</h3>
-              <div class="visual"><img class="analysis-img" data-reco="salad-2" alt="味の分析（サラダ 代替）" loading="lazy"></div>
-              <details class="why"><summary>なぜこれ？</summary><p id="why-salad-2">隣接する味レンジを強調。</p></details>
-              <button class="btn btn-order" data-order="salad">注文へ</button>
-            </article>
-            <article class="reco card reco-eq">
-              <h3 class="h2">冒険プラン</h3>
-              <div class="visual"><img class="analysis-img" data-reco="salad-3" alt="味の分析（サラダ 冒険）" loading="lazy"></div>
-              <details class="why"><summary>なぜこれ？</summary><p id="why-salad-3">安全枠内で新規レンジを提案。</p></details>
-              <button class="btn btn-order" data-order="salad">注文へ</button>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="tpl-step" data-step="73">
-        <div class="stack gap-24">
-          <h2 class="h1">あなたへのおすすめ（クレープ）</h2>
-          <div class="reco-grid">
-            <article class="reco card reco-eq">
-              <h3 class="h2">最適プラン</h3>
-              <div class="visual"><img class="analysis-img" data-reco="crepe-1" alt="味の分析（クレープ 最適）" loading="lazy"></div>
-              <details class="why"><summary>なぜこれ？</summary><p id="why-crepe-1">上位味軸に最も合致する構成。</p></details>
-              <button class="btn btn-order" data-order="crepe">注文へ</button>
-            </article>
-            <article class="reco card reco-eq">
-              <h3 class="h2">代替プラン</h3>
-              <div class="visual"><img class="analysis-img" data-reco="crepe-2" alt="味の分析（クレープ 代替）" loading="lazy"></div>
-              <details class="why"><summary>なぜこれ？</summary><p id="why-crepe-2">隣接する味レンジを強調。</p></details>
-              <button class="btn btn-order" data-order="crepe">注文へ</button>
-            </article>
-            <article class="reco card reco-eq">
-              <h3 class="h2">冒険プラン</h3>
-              <div class="visual"><img class="analysis-img" data-reco="crepe-3" alt="味の分析（クレープ 冒険）" loading="lazy"></div>
-              <details class="why"><summary>なぜこれ？</summary><p id="why-crepe-3">安全枠内で新規レンジを提案。</p></details>
-              <button class="btn btn-order" data-order="crepe">注文へ</button>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="tpl-step" data-step="74">
-        <div class="stack gap-24">
-          <h2 class="h1">あなたへのおすすめ（ドリンク）</h2>
-          <div class="reco-grid">
-            <article class="reco card reco-eq">
-              <h3 class="h2">最適プラン</h3>
-              <div class="visual"><img class="analysis-img" data-reco="drink-1" alt="味の分析（ドリンク 最適）" loading="lazy"></div>
-              <details class="why"><summary>なぜこれ？</summary><p id="why-drink-1">上位味軸に最も合致する構成。</p></details>
-              <button class="btn btn-order" data-order="drink">注文へ</button>
-            </article>
-            <article class="reco card reco-eq">
-              <h3 class="h2">代替プラン</h3>
-              <div class="visual"><img class="analysis-img" data-reco="drink-2" alt="味の分析（ドリンク 代替）" loading="lazy"></div>
-              <details class="why"><summary>なぜこれ？</summary><p id="why-drink-2">隣接する味レンジを強調。</p></details>
-              <button class="btn btn-order" data-order="drink">注文へ</button>
-            </article>
-            <article class="reco card reco-eq">
-              <h3 class="h2">冒険プラン</h3>
-              <div class="visual"><img class="analysis-img" data-reco="drink-3" alt="味の分析（ドリンク 冒険）" loading="lazy"></div>
-              <details class="why"><summary>なぜこれ？</summary><p id="why-drink-3">安全枠内で新規レンジを提案。</p></details>
-              <button class="btn btn-order" data-order="drink">注文へ</button>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- 08x: Order Queues -->
-      <section class="tpl-step" data-step="81">
-        <div class="stack gap-24">
-          <h2 class="h1">調理キュー（パスタ）</h2>
-          <div class="order card">
-            <div class="order-meta">
-              <div class="meta"><span class="meta-label">番号</span><strong class="meta-val" id="order-no-pasta">P-102</strong></div>
-              <div class="meta"><span class="meta-label">ETA</span><strong class="meta-val">04:30</strong><span class="meta-sub">約 4分30秒</span></div>
-              <div class="meta"><span class="meta-label">Live</span><div class="live-chip">ロボシェフ 稼働中</div></div>
-            </div>
-
-            <div class="custom-block">
-              <h3 class="h2">麺のゆで加減</h3>
-              <p class="caption">お好みをお選びください。選ぶと「次へ」が有効になります。</p>
-              <div class="radio-cards" data-group="pasta-boil">
-                <label class="radio-card">
-                  <input type="radio" name="pasta-boil" value="アルデンテ" />
-                  <span class="radio-title">アルデンテ</span>
-                  <span class="radio-desc">芯を残した食感</span>
-                </label>
-                <label class="radio-card">
-                  <input type="radio" name="pasta-boil" value="標準" />
-                  <span class="radio-title">標準</span>
-                  <span class="radio-desc">バランスの良い茹で上がり</span>
-                </label>
-                <label class="radio-card">
-                  <input type="radio" name="pasta-boil" value="柔らかめ" />
-                  <span class="radio-title">柔らかめ</span>
-                  <span class="radio-desc">やさしい歯ざわり</span>
-                </label>
-              </div>
-              <div class="current-choice" id="choice-pasta">現在の選択：未選択</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="tpl-step" data-step="82">
-        <div class="stack gap-24">
-          <h2 class="h1">調理キュー（サラダ）</h2>
-          <div class="order card">
-            <div class="order-meta">
-              <div class="meta"><span class="meta-label">番号</span><strong class="meta-val" id="order-no-salad">S-214</strong></div>
-              <div class="meta"><span class="meta-label">ETA</span><strong class="meta-val">03:40</strong><span class="meta-sub">約 3分40秒</span></div>
-              <div class="meta"><span class="meta-label">Live</span><div class="live-chip">ロボシェフ 稼働中</div></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="tpl-step" data-step="83">
-        <div class="stack gap-24">
-          <h2 class="h1">調理キュー（クレープ）</h2>
-          <div class="order card">
-            <div class="order-meta">
-              <div class="meta"><span class="meta-label">番号</span><strong class="meta-val" id="order-no-crepe">C-031</strong></div>
-              <div class="meta"><span class="meta-label">ETA</span><strong class="meta-val">03:10</strong><span class="meta-sub">約 3分10秒</span></div>
-              <div class="meta"><span class="meta-label">Live</span><div class="live-chip">ロボパティシエ 稼働中</div></div>
-            </div>
-
-            <div class="custom-block">
-              <h3 class="h2">甘さ加減</h3>
-              <p class="caption">選ぶと「次へ」が有効になります。</p>
-              <div class="radio-cards" data-group="crepe-sweetness">
-                <label class="radio-card">
-                  <input type="radio" name="crepe-sweetness" value="甘さ" />
-                  <span class="radio-title">甘さ</span>
-                  <span class="radio-desc">しっかりスイート</span>
-                </label>
-                <label class="radio-card">
-                  <input type="radio" name="crepe-sweetness" value="微甘" />
-                  <span class="radio-title">微甘</span>
-                  <span class="radio-desc">ほどよく控えめ</span>
-                </label>
-                <label class="radio-card">
-                  <input type="radio" name="crepe-sweetness" value="甘くない" />
-                  <span class="radio-title">甘くない</span>
-                  <span class="radio-desc">塩味・食事系に最適</span>
-                </label>
-              </div>
-              <div class="current-choice" id="choice-crepe">現在の選択：未選択</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="tpl-step" data-step="84">
-        <div class="stack gap-24">
-          <h2 class="h1">調理キュー（ドリンク）</h2>
-          <div class="order card">
-            <div class="order-meta">
-              <div class="meta"><span class="meta-label">番号</span><strong class="meta-val" id="order-no-drink">D-447</strong></div>
-              <div class="meta"><span class="meta-label">ETA</span><strong class="meta-val">02:50</strong><span class="meta-sub">約 2分50秒</span></div>
-              <div class="meta"><span class="meta-label">Live</span><div class="live-chip">ロボバリスタ 稼働中</div></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 10: Staff Help -->
-      <section class="tpl-step" data-step="10">
-        <div class="stack gap-24">
-          <h2 class="h1">スタッフヘルプ</h2>
-          <div class="grid-2">
-            <button class="btn btn-primary" id="call-staff">スタッフを呼ぶ</button>
-            <div class="faq card">
-              <h3 class="h2">よくある質問</h3>
-              <ul class="body">
-                <li>データは匿名で保存されますか？</li>
-                <li>宗教・アレルギーへの配慮は？</li>
-                <li>提供までの目安時間は？</li>
-              </ul>
-            </div>
-          </div>
-          <p class="caption" aria-live="polite" id="call-status" hidden></p>
-        </div>
-      </section>
-
-      <!-- 11: Thank You -->
-      <section class="tpl-step" data-step="11">
-        <div class="stack gap-24 center">
-          <h2 class="h1">ご注文ありがとうございました</h2>
-          <p class="body">
-            いただいた回答をもとに、あなただけのメニューをご用意いたします。<br />
-            お好きなお席でくつろぎながら、出来上がりをお待ちください。
-          </p>
-          <div class="actions-row">
-            <button class="btn btn-primary" data-jump="1">トップに戻る</button>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="org-footer" role="contentinfo">
-      <button class="btn btn-secondary" id="btn-back">戻る</button>
-      <div class="progress small" aria-hidden="true">
-        <ol>
-          <li class="is-active"></li>
-          <li></li><li></li><li></li><li></li><li></li>
-        </ol>
       </div>
-      <button class="btn btn-primary" id="btn-next">次へ</button>
-    </footer>
-  </div>
+    </section>
+
+    <!-- 8. あなたへのおすすめサラダ -->
+    <section class="page" data-step="8" aria-label="おすすめサラダ">
+      <div class="page-inner">
+        <h2 class="page-title">あなたへのおすすめサラダ</h2>
+        <div class="recommendation-list" id="saladRecommendations">
+          <!-- JS で3プラン生成 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. 調理キュー（サラダ） -->
+    <section class="page" data-step="9" aria-label="調理キュー サラダ">
+      <div class="page-inner">
+        <h2 class="page-title">調理キュー（サラダ）</h2>
+
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-label">番号</div>
+            <div class="status-value" id="queueSaladNo">S-102</div>
+          </div>
+          <div class="status-card">
+            <div class="status-label">ETA</div>
+            <div class="status-value" id="queueSaladEta">03:10</div>
+          </div>
+          <div class="status-card">
+            <div class="status-label">Live</div>
+            <div class="status-value" id="queueSaladLive">ロボシェフ</div>
+          </div>
+        </div>
+
+        <p class="card-help">
+          サラダの具材やドレッシングは、先ほどの回答から自動で最適化されています。
+        </p>
+      </div>
+    </section>
+
+    <!-- 10. あなたへのおすすめクレープ -->
+    <section class="page" data-step="10" aria-label="おすすめクレープ">
+      <div class="page-inner">
+        <h2 class="page-title">あなたへのおすすめクレープ</h2>
+        <div class="recommendation-list" id="crepeRecommendations">
+          <!-- JS で3プラン生成 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. 調理キュー（クレープ） -->
+    <section class="page" data-step="11" aria-label="調理キュー クレープ">
+      <div class="page-inner">
+        <h2 class="page-title">調理キュー（クレープ）</h2>
+
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-label">番号</div>
+            <div class="status-value" id="queueCrepeNo">C-221</div>
+          </div>
+          <div class="status-card">
+            <div class="status-label">ETA</div>
+            <div class="status-value" id="queueCrepeEta">03:50</div>
+          </div>
+          <div class="status-card">
+            <div class="status-label">Live</div>
+            <div class="status-value" id="queueCrepeLive">ロボパティシエ</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>甘さ加減</h3>
+            <p class="card-help">
+              お好みの甘さをお選びください。選択後「次へ」でドリンクへ進みます。
+            </p>
+          </div>
+
+          <div class="option-card-row" data-group="crepe-sweetness">
+            <button type="button" class="option-card" data-value="sweet">
+              <div class="option-title">甘さ</div>
+              <div class="option-body">しっかり甘めで満足感のある味わい</div>
+            </button>
+            <button type="button" class="option-card" data-value="mild">
+              <div class="option-title">微甘</div>
+              <div class="option-body">控えめな甘さで軽い仕上がり</div>
+            </button>
+            <button type="button" class="option-card" data-value="no-sugar">
+              <div class="option-title">甘くない</div>
+              <div class="option-body">糖分を抑えたすっきりテイスト</div>
+            </button>
+          </div>
+
+          <p class="card-help small">※ 選択はいつでも戻って変更できます。</p>
+          <div class="current-selection">
+            現在の選択：<span id="crepeSweetnessLabel">未選択</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. あなたへのおすすめドリンク -->
+    <section class="page" data-step="12" aria-label="おすすめドリンク">
+      <div class="page-inner">
+        <h2 class="page-title">あなたへのおすすめドリンク</h2>
+        <div class="recommendation-list" id="drinkRecommendations">
+          <!-- JS で3プラン生成 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. 調理キュー（ドリンク） -->
+    <section class="page" data-step="13" aria-label="調理キュー ドリンク">
+      <div class="page-inner">
+        <h2 class="page-title">調理キュー（ドリンク）</h2>
+
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-label">番号</div>
+            <div class="status-value" id="queueDrinkNo">D-045</div>
+          </div>
+          <div class="status-card">
+            <div class="status-label">ETA</div>
+            <div class="status-value" id="queueDrinkEta">02:40</div>
+          </div>
+          <div class="status-card">
+            <div class="status-label">Live</div>
+            <div class="status-value" id="queueDrinkLive">バリスタロボ</div>
+          </div>
+        </div>
+
+        <p class="card-help">
+          カフェインや甘さの調整は、先ほどのご回答をもとに反映されています。
+        </p>
+      </div>
+    </section>
+
+    <!-- 14. スタッフヘルプ -->
+    <section class="page" data-step="14" aria-label="スタッフヘルプ">
+      <div class="page-inner">
+        <h2 class="page-title">スタッフヘルプ</h2>
+
+        <div class="two-column">
+          <div class="card staff-card">
+            <button id="callStaffButton" class="primary-button full-height">
+              スタッフを呼ぶ
+            </button>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>よくある質問</h3>
+            </div>
+            <ul class="faq-list">
+              <li>データは匿名で保存されますか？</li>
+              <li>宗教・アレルギーへの配慮は？</li>
+              <li>AIと量子の役割は？</li>
+            </ul>
+          </div>
+        </div>
+
+        <p id="staffStatus" class="card-help status-message"></p>
+
+        <div class="summary-actions">
+          <button id="staffDoneButton" class="primary-button">完了</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15. ご注文ありがとうございました -->
+    <section class="page" data-step="15" aria-label="ご注文ありがとうございました">
+      <div class="page-inner thankyou-page">
+        <h2 class="page-title center">ご注文ありがとうございました</h2>
+        <p class="thankyou-text">
+          いただいた回答をもとに、あなただけのメニューをご用意いたします。<br />
+          お好きなお席でくつろぎながら、出来上がりをお待ちください。
+        </p>
+        <button id="backToTopButton" class="primary-button">トップに戻る</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- フッターナビ -->
+  <footer class="app-footer">
+    <button id="prevButton" class="secondary-button nav-button" disabled>戻る</button>
+
+    <div id="progressDots" class="progress-dots">
+      <!-- JS で 16個 のドット生成 -->
+    </div>
+
+    <button id="nextButton" class="primary-button nav-button">次へ</button>
+  </footer>
+
+  <script src="./js/script.js" defer></script>
 </body>
 </html>
